@@ -82,7 +82,7 @@ public class RegisterAccount : LoginBase
 						SetMessage($"계정 생성 성공. {inputFieldID.text}님 환영합니다.");
 
 						// Lobby 씬으로 이동
-						//Utils.LoadScene(SceneNames.Lobby);
+						Utils.LoadScene(SceneNames.Lobby);
 					}
 				});
 			}
