@@ -1,6 +1,6 @@
-using UnityEngine.SceneManagement;
+ï»¿using UnityEngine.SceneManagement;
 
-public enum SceneNames { Logo=0, Login, Lobby, }
+public enum SceneNames { Logo=0, Login, Lobby, Game, }
 
 public static class Utils
 {
@@ -23,7 +23,7 @@ public static class Utils
 
 	public static void LoadScene(SceneNames sceneName)
 	{
-		// SceneNames ¿­°ÅÇüÀ¸·Î ¸Å°³º¯¼ö¸¦ ¹Þ¾Æ¿Â °æ¿ì ToString() Ã³¸®
+		// SceneNames ì—´ê±°í˜•ìœ¼ë¡œ ë§¤ê°œë³€ìˆ˜ë¥¼ ë°›ì•„ì˜¨ ê²½ìš° ToString() ì²˜ë¦¬
 		SceneManager.LoadScene(sceneName.ToString());
 	}
 }
