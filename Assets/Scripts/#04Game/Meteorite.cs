@@ -1,20 +1,27 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Meteorite : MonoBehaviour
 {
-	private	GameController	gameController;
+    [SerializeField]
+    private GameObject      explosionPrefab;     // 폭발 이펙트 프리팹
+    private GameController  gameController;
 
-	public void Setup(GameController gameController)
-	{
-		this.gameController = gameController;
-	}
+    public void Setup(GameController gameController)
+    {
+        this.gameController = gameController;
+    }
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if ( collision.CompareTag("Player") )
-		{
-			gameController.GameOver();
-		}
-	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            // 폭발 이펙트 생성
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            // 운석 삭제
+            Destroy(gameObject);
+
+            gameController.GameOver();
+        }
+    }
 }
 

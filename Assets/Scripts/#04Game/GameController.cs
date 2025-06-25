@@ -1,34 +1,47 @@
-using UnityEngine;
+ï»¿using UnityEngine;
+using UnityEngine.Events;
 
 public class GameController : MonoBehaviour
 {
-	public	bool	IsGameOver { set; get; } = false;
+    [SerializeField]
+    private UnityEvent		    onGameOver;      // ê²Œì„ì˜¤ë²„ ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë©”ì†Œë“œ ë“±ë¡ ë° ì‹¤í–‰
+    [SerializeField]
+    private DailyRankRegister   dailyRank;
 
-	public void GameOver()
+    private int				score = 0;
+
+    public	bool			IsGameOver { set; get; } = false;
+    public int				Score
+    {
+        set => score = Mathf.Max(0, value);
+        get => score;
+    }
+
+    public void GameOver()
 	{
-		// Áßº¹ Ã³¸® µÇÁö ¾Êµµ·Ï bool º¯¼ö·Î Á¦¾î
+		// ì¤‘ë³µ ì²˜ë¦¬ ë˜ì§€ ì•Šë„ë¡ bool ë³€ìˆ˜ë¡œ ì œì–´
 		if ( IsGameOver == true ) return;
 
 		IsGameOver = true;
 
-		// °æÇèÄ¡ Áõ°¡ ¹× ·¹º§¾÷ ¿©ºÎ °Ë»ç
-		// (ÇöÀç ·¹º§ ½Ã½ºÅÛ¿¡ ´ëÇÑ ¼³Á¤ÀÌ ¾ø±â ¶§¹®¿¡ °æÇèÄ¡ÀÇ ÃÖ´ëÄ¡¸¦ 100À¸·Î °¡Á¤)
-		// (°ÔÀÓÀ» ÇÑ¹ø ÇÃ·¹ÀÌÇÒ ¶§¸¶´Ù °æÇèÄ¡´Â 25¾¿ Áõ°¡)
-		BackendGameData.Instance.UserGameData.experience += 25;
+        // ê²Œì„ì˜¤ë²„ ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë©”ì†Œë“œë“¤ì„ ì‹¤í–‰
+        onGameOver.Invoke();
+
+        // í˜„ì¬ ì ìˆ˜ ì •ë³´ë¥¼ ë°”íƒ•ìœ¼ë¡œ ë­í‚¹ ë°ì´í„° ê°±ì‹ 
+        dailyRank.Process(score);
+
+        // ê²½í—˜ì¹˜ ì¦ê°€ ë° ë ˆë²¨ì—… ì—¬ë¶€ ê²€ì‚¬
+        // (í˜„ì¬ ë ˆë²¨ ì‹œìŠ¤í…œì— ëŒ€í•œ ì„¤ì •ì´ ì—†ê¸° ë•Œë¬¸ì— ê²½í—˜ì¹˜ì˜ ìµœëŒ€ì¹˜ë¥¼ 100ìœ¼ë¡œ ê°€ì •)
+        // (ê²Œì„ì„ í•œë²ˆ í”Œë ˆì´í•  ë•Œë§ˆë‹¤ ê²½í—˜ì¹˜ëŠ” 25ì”© ì¦ê°€)
+        BackendGameData.Instance.UserGameData.experience += 25;
 		if ( BackendGameData.Instance.UserGameData.experience >= 100 )
 		{
 			BackendGameData.Instance.UserGameData.experience = 0;
 			BackendGameData.Instance.UserGameData.level ++;
 		}
 
-		// °ÔÀÓ Á¤º¸ ¾÷µ¥ÀÌÆ®
-		BackendGameData.Instance.GameDataUpdate(AfterGameOver);
-	}
-
-	public void AfterGameOver()
-	{
-		// ·Îºñ ¾ÀÀ¸·Î ÀÌµ¿
-		Utils.LoadScene(SceneNames.Lobby);
+        // ê²Œì„ ì •ë³´ ì—…ë°ì´íŠ¸
+        BackendGameData.Instance.GameDataUpdate();
 	}
 }
 

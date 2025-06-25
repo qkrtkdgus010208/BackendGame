@@ -1,25 +1,21 @@
-[System.Serializable]
+ï»¿[System.Serializable]
 public class UserGameData
 {
-	public	int		level;			// Lobby Scene¿¡ º¸ÀÌ´Â ÇÃ·¹ÀÌ¾î ·¹º§
-	public	float	experience;		// Lobby Scene¿¡ º¸ÀÌ´Â ÇÃ·¹ÀÌ¾î °æÇèÄ¡
-	public	int		gold;			// ¹«·á ÀçÈ­
-	public	int		jewel;			// À¯·á ÀçÈ­
-	public	int		heart;			// °ÔÀÓ ÇÃ·¹ÀÌ¿¡ ¼Ò¸ğµÇ´Â ÀçÈ­
-	
-	public void Reset()
-	{
-		level		= 1;
-		experience	= 0;
-		gold		= 0;
-		jewel		= 0;
-		heart		= 30;
-	}
+    public int      level;           // Lobby Sceneì— ë³´ì´ëŠ” í”Œë ˆì´ì–´ ë ˆë²¨
+    public float    experience;        // Lobby Sceneì— ë³´ì´ëŠ” í”Œë ˆì´ì–´ ê²½í—˜ì¹˜
+    public int      gold;            // ë¬´ë£Œ ì¬í™”
+    public int      jewel;           // ìœ ë£Œ ì¬í™”
+    public int      heart;           // ê²Œì„ í”Œë ˆì´ì— ì†Œëª¨ë˜ëŠ” ì¬í™”
+    public int      dailyBestScore;  // ì¼ì¼ ìµœê³  ì ìˆ˜
+
+    public void Reset()
+    {
+        level           = 1;
+        experience      = 0;
+        gold            = 0;
+        jewel           = 0;
+        heart           = 30;
+        dailyBestScore  = 0;
+    }
 }
 
-
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BackEnd;
-*/
