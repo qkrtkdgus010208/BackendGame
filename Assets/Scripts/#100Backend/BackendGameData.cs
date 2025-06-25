@@ -55,6 +55,9 @@ public class BackendGameData
                 gameDataRowInDate = callback.GetInDate();
 
                 Debug.Log($"게임 정보 데이터 삽입에 성공했습니다. : {callback}");
+
+                // Lobby 씬으로 이동
+                Utils.LoadScene(SceneNames.Lobby);
             }
             // 실패했을 때
             else
