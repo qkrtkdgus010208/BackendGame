@@ -1,28 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using BackEnd;
+using System.Collections.Generic;
 using UnityEngine;
-using BackEnd;
+using UnityEngine.Events;
 
 public class BackendPostSystem : MonoBehaviour
 {
-	private	List<PostData>	postList = new List<PostData>();
+    [System.Serializable]
+    public class PostEvent : UnityEvent<List<PostData>> { }
+    public PostEvent onGetPostListEvent = new PostEvent();
 
-	private void Update()
-	{
-		if ( Input.GetKeyDown("1") )
-		{
-			PostListGet(PostType.Admin);
-		}
-		else if ( Input.GetKeyDown("2") )
-		{
-			PostReceive(PostType.Admin, 0);
-		}
-		else if ( Input.GetKeyDown("3") )
-		{
-			PostReceiveAll(PostType.Admin);
-		}
-	}
+    private	List<PostData>	postList = new List<PostData>();
 
-	public void PostListGet(PostType postType)
+    public void PostListGet()
+    {
+        PostListGet(PostType.Admin);
+    }
+
+    public void PostReceive(PostType postType, string inDate)
+    {
+        PostReceive(postType, postList.FindIndex(item => item.inDate.Equals(inDate)));
+    }
+
+    public void PostReceiveAll()
+    {
+        PostReceiveAll(PostType.Admin);
+    }
+
+    public void PostListGet(PostType postType)
 	{
 		Backend.UPost.GetPostList(postType, callback =>
 		{
@@ -93,8 +97,11 @@ public class BackendPostSystem : MonoBehaviour
 					postList.Add(post);
 				}
 
-				// 저장 가능한 모든 우편(postList) 정보 출력
-				for ( int i = 0; i < postList.Count; ++ i )
+                // 우편 리스트 불러오기가 완료되었을 때 이벤트 메소드 호출
+                onGetPostListEvent?.Invoke(postList);
+
+                // 저장 가능한 모든 우편(postList) 정보 출력
+                for ( int i = 0; i < postList.Count; ++ i )
 				{
 					Debug.Log($"{i}번째 우편\n{postList[i].ToString()}");
 				}
@@ -235,6 +242,15 @@ public class BackendPostSystem : MonoBehaviour
 }
 
 
-/*
-		*/
-/**/
+/* 같은 코드.. 임을 알려줄 것
+ * public void PostReceive(PostType postType, string inDate)
+	{
+		for ( int i = 0; i < postList.Count; ++ i )
+		{
+			if ( postList[i].inDate.Equals(inDate) )
+			{
+				PostReceive(postType, i);
+				return;
+			}
+		}
+	}*/
