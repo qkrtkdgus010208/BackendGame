@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using BackEnd;
 using System;
@@ -7,9 +7,9 @@ public class FriendBase : MonoBehaviour
 {
 	[Header("Friend Base")]
 	[SerializeField]
-	private	TextMeshProUGUI	textNickname;	// ´Ğ³×ÀÓ
+	private	TextMeshProUGUI			textNickname;	// ë‹‰ë„¤ì„
 	[SerializeField]
-	private	TextMeshProUGUI	textTime;		// ¸¸·á½Ã°£, Á¢¼Ó½Ã°£ µîÀÇ ½Ã°£ Á¤º¸
+    protected TextMeshProUGUI		textTime;		// ë§Œë£Œì‹œê°„, ì ‘ì†ì‹œê°„ ë“±ì˜ ì‹œê°„ ì •ë³´
 
 	protected	BackendFriendSystem	backendFriendSystem;
 	protected	FriendPageBase		friendPage;
@@ -26,32 +26,32 @@ public class FriendBase : MonoBehaviour
 
 	public void SetExpirationDate()
 	{
-		// GetServerTime() - ¼­¹ö ½Ã°£ ºÒ·¯¿À±â
+		// GetServerTime() - ì„œë²„ ì‹œê°„ ë¶ˆëŸ¬ì˜¤ê¸°
 		Backend.Utils.GetServerTime(callback =>
 		{
 			if ( !callback.IsSuccess() )
 			{
-				Debug.LogError($"¼­¹ö ½Ã°£ ºÒ·¯¿À±â¿¡ ½ÇÆĞÇß½À´Ï´Ù. : {callback}");
+				Debug.LogError($"ì„œë²„ ì‹œê°„ ë¶ˆëŸ¬ì˜¤ê¸°ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. : {callback}");
 				return;
 			}
 
-			// JSON µ¥ÀÌÅÍ ÆÄ½Ì ¼º°ø
+			// JSON ë°ì´í„° íŒŒì‹± ì„±ê³µ
 			try
 			{
-				// createdAt ½Ã°£À¸·ÎºÎÅÍ 3ÀÏ µÚÀÇ ½Ã°£
+				// createdAt ì‹œê°„ìœ¼ë¡œë¶€í„° 3ì¼ ë’¤ì˜ ì‹œê°„
 				DateTime after3Days = DateTime.Parse(friendData.createdAt).AddDays(Constants.EXPIRATION_DAYS);
-				// ÇöÀç ¼­¹ö ½Ã°£
+				// í˜„ì¬ ì„œë²„ ì‹œê°„
 				string serverTime = callback.GetFlattenJSON()["utcTime"].ToString();
-				// ¸¸·á±îÁö ³²Àº ½Ã°£ = ¸¸·á ½Ã°£ - ÇöÀç ¼­¹ö ½Ã°£
+				// ë§Œë£Œê¹Œì§€ ë‚¨ì€ ì‹œê°„ = ë§Œë£Œ ì‹œê°„ - í˜„ì¬ ì„œë²„ ì‹œê°„
 				TimeSpan timeSpan = after3Days - DateTime.Parse(serverTime);
 			
-				// timeSpan.TotalHours·Î ³²Àº ±â°£À» ½Ã(hour)·Î Ç¥Çö
-				textTime.text = $"{timeSpan.TotalHours:F0}½Ã°£ ³²À½";
+				// timeSpan.TotalHoursë¡œ ë‚¨ì€ ê¸°ê°„ì„ ì‹œ(hour)ë¡œ í‘œí˜„
+				textTime.text = $"{timeSpan.TotalHours:F0}ì‹œê°„ ë‚¨ìŒ";
 			}
-			// JSON µ¥ÀÌÅÍ ÆÄ½Ì ½ÇÆĞ
+			// JSON ë°ì´í„° íŒŒì‹± ì‹¤íŒ¨
 			catch ( Exception e )
 			{
-				// try-catch ¿¡·¯ Ãâ·Â
+				// try-catch ì—ëŸ¬ ì¶œë ¥
 				Debug.LogError(e);
 			}
 		});

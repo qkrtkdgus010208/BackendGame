@@ -1,17 +1,23 @@
-public class FriendData
+ï»¿public class FriendData
 {
-	public	string	nickname;	// ´Ğ³×ÀÓ
-	public	string	inDate;		// ÇØ´ç À¯ÀúÀÇ inDate
-	public	string	createdAt;	// Ä£±¸ ¿äÃ» º¸³½ ½Ã°£ / Ä£±¸ ¿äÃ» ¹ŞÀº ½Ã°£ / Ä£±¸°¡ µÈ ½Ã°£
+	public	string	nickname;	// ë‹‰ë„¤ì„
+	public	string	inDate;		// í•´ë‹¹ ìœ ì €ì˜ inDate
+	public	string	createdAt;  // ì¹œêµ¬ ìš”ì²­ ë³´ë‚¸ ì‹œê°„ / ì¹œêµ¬ ìš”ì²­ ë°›ì€ ì‹œê°„ / ì¹œêµ¬ê°€ ëœ ì‹œê°„
+    public string	lastLogin;  // ë§ˆì§€ë§‰ ì ‘ì† ë‚ ì§œ
 
-	public override string ToString()
+    // levelê³¼ ê°™ì´ ì¶œë ¥í•˜ê³  ì‹¶ì€ ìœ ì €ì •ë³´ê°€ ìˆìœ¼ë©´ ì¶”ê°€
+    public string	level;		// í•´ë‹¹ ìœ ì €ì˜ level
+
+    public override string ToString()
 	{
 		string result = string.Empty;
-		result += $"´Ğ³×ÀÓ : {nickname}\n";
+		result += $"ë‹‰ë„¤ì„ : {nickname}\n";
 		result += $"inDate : {inDate}\n";
 		result += $"createdAt : {createdAt}\n";
+        result += $"lastLogin : {lastLogin}\n";
+        result += $"level : {level}\n";
 
-		return result;
+        return result;
 	}
 }
 
